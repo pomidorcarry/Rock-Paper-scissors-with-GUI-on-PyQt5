@@ -64,7 +64,7 @@ class Page1(QWidget):
     def initUI_page_1_vertical_layout(self,page_1_main_layout:QVBoxLayout)->None:
         self.page_1_title = QLabel("Rock paper scissors")
         self.page_1_picture = QLabel()
-        self.page_1_picture.setPixmap(QPixmap("cs50final/rock_paper_scissors/assets/cat.jpg"))
+        self.page_1_picture.setPixmap(QPixmap("assets/cat.jpg"))
         self.page_1_picture.setScaledContents(True)
         self.page_1_submit_button = QPushButton("Submit your name")
         

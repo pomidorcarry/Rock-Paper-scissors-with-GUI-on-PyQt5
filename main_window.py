@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Rock Paper Scissors")
-        self.setWindowIcon(QIcon("cs50final/rock_paper_scissors/assets/test.jpg"))
+        self.setWindowIcon(QIcon("assets/test.jpg"))
 
         self.page_1_size = QSize(600,500)
         self.page_2_size = QSize(750,750)

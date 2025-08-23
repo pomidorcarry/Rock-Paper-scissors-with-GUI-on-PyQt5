@@ -1,2 +1,5 @@
 __pycache__/
+widgets/__pycache__/
+pages/__pycache__/
 *.pytest_cache
+
