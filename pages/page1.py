@@ -5,13 +5,14 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont, QPixmap
 
 from widgets.custom_dialog import CustomDialog
+# from main_window import MainWindow
 
 class Page1(QWidget):
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
 
-
+        self.resource_path = self.main_window.resource_path
         self.name_is_filled = False
 
         horizontal_layout = QHBoxLayout()
@@ -68,7 +69,7 @@ class Page1(QWidget):
     def initUI_vertical_layout(self,vertical_layout:QVBoxLayout)->None:
         self.title = QLabel("Rock paper scissors")
         self.picture = QLabel()
-        self.picture.setPixmap(QPixmap("rock_paper_scissors/assets/cat.jpg"))
+        self.picture.setPixmap(QPixmap(self.resource_path("assets/picture_1.jpg")))
         self.picture.setScaledContents(True)
         self.submit_button = QPushButton("Submit your name")
         
@@ -101,24 +102,24 @@ class Page1(QWidget):
 
     def validate_name(self,player_name:str)->bool:
         if re.fullmatch(r".{,5}",player_name):
-            self.error_dialog("Name's too short\nProvide a name 6-12 symbols long")
+            CustomDialog.error_dialog("Name's too short\nProvide a name 6-12 symbols long")
             return False
         if re.fullmatch(r".{13,}",player_name):
-            self.error_dialog("Name's too long\nProvide a name 6-12 symbols long")
+            CustomDialog.error_dialog("Name's too long\nProvide a name 6-12 symbols long")
             return False
         if not re.search(r"\d",player_name):
-            self.error_dialog("Provide a name containing at least one digit")
+            CustomDialog.error_dialog("Provide a name containing at least one digit")
             return False
         if not re.search(r"[a-z]",player_name):
-            self.error_dialog("Provide a name containing at least one lowercase letter")
+            CustomDialog.error_dialog("Provide a name containing at least one lowercase letter")
             return False
         if not re.search(r"[A-Z]",player_name):
-            self.error_dialog("Provide a name containing at least one upppercase letter")
+            CustomDialog.error_dialog("Provide a name containing at least one upppercase letter")
             return False
         if re.fullmatch(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,12}",player_name):
             return True
         else:
-            self.error_dialog("Generic error")
+            CustomDialog.error_dialog("Generic error")
             return False
 
     def start_game(self):
@@ -126,7 +127,7 @@ class Page1(QWidget):
             self.main_window.switch_to_page_2()
             # print(self.main_window.player_name)
         else:
-            self.error_dialog("Please enter a correct name!")
+            CustomDialog.error_dialog("Please enter a correct name!")
 
     def name_filled_check(self):
         if self.name_is_filled:
@@ -134,6 +135,3 @@ class Page1(QWidget):
         else:
             return False
 
-    def error_dialog(self,message:str)->None:
-        dlg = CustomDialog(message=message)
-        dlg.exec_()

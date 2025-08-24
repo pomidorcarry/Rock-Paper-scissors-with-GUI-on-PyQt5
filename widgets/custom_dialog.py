@@ -33,3 +33,8 @@ class CustomDialog(QDialog):
                                     }
                                         """)
         self.show()
+
+    @classmethod
+    def error_dialog(cls,message:str)->None:
+        dlg = CustomDialog(message=message)
+        dlg.exec_()

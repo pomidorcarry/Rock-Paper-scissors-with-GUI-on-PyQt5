@@ -8,10 +8,14 @@ from pages.page2 import Page2
 from pages.page3 import Page3
 from utility.player import Player
 
+from widgets.custom_dialog import CustomDialog
+
 class MainWindow(QMainWindow):
 
-    def __init__(self):
+    def __init__(self,rpath):
         super().__init__()
+
+        self.resource_path = rpath
         #shared data
         self.player = Player()
         self.cpu = Player()
@@ -19,7 +23,7 @@ class MainWindow(QMainWindow):
 
 
         self.setWindowTitle("Rock Paper Scissors")
-        self.setWindowIcon(QIcon("rock_paper_scissors/assets/test.jpg"))
+        self.setWindowIcon(QIcon(self.resource_path("assets/icon.jpg")))
 
         self.page_1_size = QSize(750,750)
         self.page_2_size = QSize(750,750)
@@ -33,7 +37,6 @@ class MainWindow(QMainWindow):
         self.stacked_layout.addWidget(self.page_1_widget)
         self.stacked_layout.addWidget(self.page_2_widget)
         self.stacked_layout.addWidget(self.page_3_widget)
-
 
         #set the initial page
         self.stacked_layout.setCurrentIndex(0)
@@ -83,3 +86,7 @@ class MainWindow(QMainWindow):
         self.setFixedSize(self.page_2_size)
         self.center_window()
         self.stacked_layout.setCurrentIndex(2)
+
+    def error_dialog(self,message:str)->None:
+        dlg = CustomDialog(message=message)
+        dlg.exec_()

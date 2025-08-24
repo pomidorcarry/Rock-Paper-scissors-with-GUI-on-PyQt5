@@ -1,17 +1,18 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMainWindow, QPushButton,  QDesktopWidget, QButtonGroup, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QStackedLayout, QLineEdit, QLabel, QApplication, QMessageBox, QDialog, QDialogButtonBox, QRadioButton
-
+from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtCore import Qt, QSize
 
 from utility.player import Player
 from utility.game import Game
+from widgets.custom_dialog import CustomDialog
 # from main_window import MainWindow
 
 class Page2(QWidget):
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
-
+        self.resource_path = self.main_window.resource_path
         self.local_player_choice = None
 
         self.horizontal_layout = QHBoxLayout()
@@ -54,6 +55,7 @@ class Page2(QWidget):
         pass
 
     def initUI_vertical_layout(self,vertical_layout:QVBoxLayout):
+        vertical_layout.setSpacing(50)
         self.score = QLabel(f"{self.main_window.player.name}:{self.main_window.player.score}\ncpu:{self.main_window.cpu.score}")
         title = QLabel("Choose one")
         vertical_layout.addWidget(self.score,alignment=Qt.AlignRight)
@@ -63,11 +65,22 @@ class Page2(QWidget):
         button.clicked.connect(self.make_option_choice)
         # verical_layout.addWidget(title,alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(button,alignment=Qt.AlignHCenter)
+        vertical_layout.addSpacing(50)
 
     def initUI_grid_layout(self,grid_layout:QGridLayout):
-        picture_rock = QLabel("Rock")
-        picture_paper = QLabel("Paper")
-        picture_scissors = QLabel("Scissors")
+        self.picture_rock = QLabel("Rock")
+        self.picture_paper = QLabel("Paper")
+        self.picture_scissors = QLabel("Scissors")
+        self.picture_rock.setPixmap(QPixmap((self.resource_path("assets/picture_3.jpg"))))
+        self.picture_paper.setPixmap(QPixmap((self.resource_path("assets/picture_2.jpg"))))
+        self.picture_scissors.setPixmap(QPixmap((self.resource_path("assets/picture_4.jpg"))))
+
+        self.picture_rock.setMaximumSize(QSize(200,200))
+        self.picture_rock.setScaledContents(True)
+        self.picture_paper.setMaximumSize(QSize(200,200))
+        self.picture_paper.setScaledContents(True)
+        self.picture_scissors.setMaximumSize(QSize(200,200))
+        self.picture_scissors.setScaledContents(True)
 
         self.button_rock = QRadioButton("Rock")
         self.button_paper = QRadioButton("Paper")
@@ -84,9 +97,9 @@ class Page2(QWidget):
         self.game_buttons_group.addButton(self.button_scissors)
 
 
-        grid_layout.addWidget(picture_rock,0,0)
-        grid_layout.addWidget(picture_paper,0,1)
-        grid_layout.addWidget(picture_scissors,0,2)
+        grid_layout.addWidget(self.picture_rock,0,0)
+        grid_layout.addWidget(self.picture_paper,0,1)
+        grid_layout.addWidget(self.picture_scissors,0,2)
 
         grid_layout.addWidget(self.button_rock,1,0)
         grid_layout.addWidget(self.button_paper,1,1)
@@ -109,14 +122,16 @@ class Page2(QWidget):
             self.main_window.switch_to_page_3()
             # print(self.main_window.player.choice)
         else:
-            print("error")
+            CustomDialog.error_dialog("Please choose one")
     
     def update_values(self):
         self.game_buttons_group.setExclusive(False)
         for button in self.game_buttons_group.buttons():
             button.setChecked(False)
         self.game_buttons_group.setExclusive(True)
+        self.local_player_choice = None
         # self.button_paper.setChecked(False)
         # self.button_rock.setChecked(False)
         # self.button_scissors.setChecked(False)
         self.score.setText(f"{self.main_window.player.name}:{self.main_window.player.score}\ncpu:{self.main_window.cpu.score}")
+
