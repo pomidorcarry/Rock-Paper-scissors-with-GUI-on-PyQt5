@@ -11,8 +11,8 @@ class Page3(QWidget):
     def __init__(self,main_window):
         super().__init__()
         self.main_window = main_window
-        self.main_window.cpu.choice = Game.cpu_make_choice()
-        self.result = Game.game_result(cpu=self.main_window.cpu,player=self.main_window.player)
+        
+        self.result = self.main_window.game_result
         self.score = QLabel(f"{self.main_window.player.name}:{self.main_window.player.score}\ncpu:{self.main_window.cpu.score}")
         self.vertical_layout = QVBoxLayout()
         self.horizontal_layout = QHBoxLayout()
@@ -49,9 +49,9 @@ class Page3(QWidget):
     def initUI_vertical_layout(self,vertical_layout:QVBoxLayout):
 
         title = QLabel("This is page 3")
-        player_choice = QLabel(f"You chose {self.main_window.player.choice}")
-        cpu_choice = QLabel(f"Cpu chose {self.main_window.cpu.choice}")
-        game_result = QLabel(f"{self.result}")
+        self.player_choice = QLabel(f"You chose {self.main_window.player.choice}")
+        self.cpu_choice = QLabel(f"Cpu chose {self.main_window.cpu.choice}")
+        self.game_result = QLabel(f"{self.result}")
         # page_3_button.clicked.connect(switch_to_page_1)
 
 
@@ -59,9 +59,9 @@ class Page3(QWidget):
         vertical_layout.addWidget(self.score,alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(title,alignment=Qt.AlignHCenter)
         # page_3_layout.addWidget(page_3_button,alignment=Qt.AlignHCenter)
-        vertical_layout.addWidget(cpu_choice,alignment=Qt.AlignHCenter)
-        vertical_layout.addWidget(player_choice,alignment=Qt.AlignHCenter)
-        vertical_layout.addWidget(game_result,alignment=Qt.AlignHCenter)
+        vertical_layout.addWidget(self.cpu_choice,alignment=Qt.AlignHCenter)
+        vertical_layout.addWidget(self.player_choice,alignment=Qt.AlignHCenter)
+        vertical_layout.addWidget(self.game_result,alignment=Qt.AlignHCenter)
         vertical_layout.addLayout(self.horizontal_layout)
 
         
@@ -79,5 +79,10 @@ class Page3(QWidget):
         horizontal_layout.addWidget(self.quit_button)
 
     def play_again(self):
-        
         self.main_window.switch_to_page_2()
+    
+    def update_values(self):
+        self.player_choice.setText(f"You chose {self.main_window.player.choice}")
+        self.cpu_choice.setText(f"Cpu chose {self.main_window.cpu.choice}")
+        self.game_result.setText(f"{Game.game_result(player=self.main_window.player,cpu=self.main_window.cpu)}")
+        self.score.setText(f"{self.main_window.player.name}:{self.main_window.player.score}\ncpu:{self.main_window.cpu.score}")

@@ -15,26 +15,24 @@ class MainWindow(QMainWindow):
         #shared data
         self.player = Player()
         self.cpu = Player()
-        # self.player_name = None
-        # self.player_option_choice = None
-        # self.player_score = 0
-        # self.cpu_score = 0
+        self.game_result = None
+
 
         self.setWindowTitle("Rock Paper Scissors")
         self.setWindowIcon(QIcon("rock_paper_scissors/assets/test.jpg"))
 
-        self.page_1_size = QSize(600,500)
+        self.page_1_size = QSize(750,750)
         self.page_2_size = QSize(750,750)
         self.setFixedSize(self.page_1_size)
         self.page_1_widget = Page1(self)
-        # self.page_2_widget = Page2(self,self.switch_to_page_3)
-        # self.page_3_widget = Page3()
+        self.page_2_widget = Page2(self)
+        self.page_3_widget = Page3(self)
 
         self.stacked_layout = QStackedLayout()
 
         self.stacked_layout.addWidget(self.page_1_widget)
-        # self.stacked_layout.addWidget(self.page_2_widget)
-        # self.stacked_layout.addWidget(self.page_3_widget)
+        self.stacked_layout.addWidget(self.page_2_widget)
+        self.stacked_layout.addWidget(self.page_3_widget)
 
 
         #set the initial page
@@ -71,15 +69,17 @@ class MainWindow(QMainWindow):
         self.close()
 
     def switch_to_page_2(self)->None:
-        self.page_2_widget = Page2(self)
-        self.stacked_layout.addWidget(self.page_2_widget)
+        # self.page_2_widget = Page2(self)
+        # self.stacked_layout.addWidget(self.page_2_widget)
+        self.page_2_widget.update_values()
         self.setFixedSize(self.page_2_size)
         self.center_window()
         self.stacked_layout.setCurrentIndex(1)
 
     def switch_to_page_3(self)->None:
-        self.page_3_widget = Page3(self)
-        self.stacked_layout.addWidget(self.page_3_widget)
+        # self.page_3_widget = Page3(self)
+        # self.stacked_layout.addWidget(self.page_3_widget)
+        self.page_3_widget.update_values()
         self.setFixedSize(self.page_2_size)
         self.center_window()
         self.stacked_layout.setCurrentIndex(2)
