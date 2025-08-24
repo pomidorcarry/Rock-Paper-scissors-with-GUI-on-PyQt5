@@ -5,24 +5,37 @@ from PyQt5.QtCore import Qt, QSize
 
 from pages.page1 import Page1 
 from pages.page2 import Page2
+from pages.page3 import Page3
+from utility.player import Player
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        #shared data
+        self.player = Player()
+        self.cpu = Player()
+        # self.player_name = None
+        # self.player_option_choice = None
+        # self.player_score = 0
+        # self.cpu_score = 0
+
         self.setWindowTitle("Rock Paper Scissors")
-        self.setWindowIcon(QIcon("assets/test.jpg"))
+        self.setWindowIcon(QIcon("rock_paper_scissors/assets/test.jpg"))
 
         self.page_1_size = QSize(600,500)
         self.page_2_size = QSize(750,750)
         self.setFixedSize(self.page_1_size)
-        self.page_1_widget = Page1(self.switch_to_page_2,self.close_window)
-        self.page_2_widget = Page2(self.switch_to_page_1)
+        self.page_1_widget = Page1(self)
+        # self.page_2_widget = Page2(self,self.switch_to_page_3)
+        # self.page_3_widget = Page3()
 
         self.stacked_layout = QStackedLayout()
 
         self.stacked_layout.addWidget(self.page_1_widget)
-        self.stacked_layout.addWidget(self.page_2_widget)
+        # self.stacked_layout.addWidget(self.page_2_widget)
+        # self.stacked_layout.addWidget(self.page_3_widget)
+
 
         #set the initial page
         self.stacked_layout.setCurrentIndex(0)
@@ -57,14 +70,16 @@ class MainWindow(QMainWindow):
     def close_window(self):
         self.close()
 
-
-    def switch_to_page_1(self)->None:
-        self.setFixedSize(self.page_1_size)
-        self.center_window()
-        self.stacked_layout.setCurrentIndex(0)
-
     def switch_to_page_2(self)->None:
+        self.page_2_widget = Page2(self)
+        self.stacked_layout.addWidget(self.page_2_widget)
         self.setFixedSize(self.page_2_size)
         self.center_window()
         self.stacked_layout.setCurrentIndex(1)
 
+    def switch_to_page_3(self)->None:
+        self.page_3_widget = Page3(self)
+        self.stacked_layout.addWidget(self.page_3_widget)
+        self.setFixedSize(self.page_2_size)
+        self.center_window()
+        self.stacked_layout.setCurrentIndex(2)
