@@ -19,13 +19,13 @@ from widgets.custom_dialog import CustomDialog
 class Page1(QWidget):
     def __init__(self, main_window):
         super().__init__()
-        #main_window is created to use it's methods
+        # main_window is created to use it's methods
         self.main_window = main_window
         self.resource_path = self.main_window.resource_path
 
         self.name_is_filled = False
 
-        #creating and initializing layouts
+        # creating and initializing layouts
         horizontal_layout = QHBoxLayout()
         vertical_layout = QVBoxLayout()
 
@@ -41,6 +41,7 @@ class Page1(QWidget):
                                 QWidget{
                                 font-size: 25px;
                                 font-family: Garamond;
+
                                             }
                                 QLabel#title{
                                 font-size: 50px;
@@ -48,17 +49,17 @@ class Page1(QWidget):
                                             }
                                 QLineEdit{
                                 font-size: 25px;
-                                border-radius: 10;
+                                border-radius: 15px;
                                             }
                                 QPushButton{
                                 font-weight: bold;
                                 background-color: #f0a860;
-                                border-radius: 15;
+                                border-radius: 15px;
                                             }
                                 QPushButton:hover{
                                 font-weight: bold;
                                 background-color: #faddc0;
-                                border-radius: 15;
+                                border-radius: 15px;
                                             }
                                                 """
         )
@@ -82,8 +83,18 @@ class Page1(QWidget):
         self.title = QLabel("Rock paper scissors")
 
         self.picture = QLabel()
-        self.picture.setPixmap(QPixmap(self.resource_path("assets/picture_1.jpg")))
-        self.picture.setScaledContents(True)
+        pic = self.resource_path("assets/picture_1.jpg")
+        pic = pic.replace("\\", "/")
+        # self.picture.setPixmap(pic)
+        # self.picture.setScaledContents(True)
+        self.picture.setStyleSheet(
+            f"""
+            color: grey;
+            border-image: url({pic});
+            border-radius: 35px;
+            """
+        )
+        self.picture.setFixedSize(QSize(400, 400))
 
         self.submit_button = QPushButton("Submit your name")
         self.submit_button.clicked.connect(self.submit_name)
@@ -95,7 +106,6 @@ class Page1(QWidget):
         self.name_box.setFixedSize(QSize(300, 60))
         self.name_box.setPlaceholderText("Input your name here")
 
-
         vertical_layout.addWidget(self.title, alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(self.picture, alignment=Qt.AlignHCenter)
         vertical_layout.addSpacing(45)
@@ -103,11 +113,11 @@ class Page1(QWidget):
         vertical_layout.addWidget(self.submit_button, alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(self.current_player_name, alignment=Qt.AlignHCenter)
 
-    def submit_name(self)->None:
+    def submit_name(self) -> None:
         """
         get's the name from the lineedit widget, validates it\n
         updates it's value in player class object and sets it's value in the label\n
-        sets name_is_filled True to allow proceeding to the next page 
+        sets name_is_filled True to allow proceeding to the next page
         """
         self.player_name = self.name_box.text()
         if not self.player_name:
@@ -118,7 +128,6 @@ class Page1(QWidget):
                 f"Current player is: {self.main_window.player.name}"
             )
             self.name_is_filled = True
-
 
     def validate_name(self, player_name: str) -> bool:
         if re.fullmatch(r".{,2}", player_name):
@@ -132,14 +141,10 @@ class Page1(QWidget):
             )
             return False
         if re.search(r"\d", player_name):
-            CustomDialog.error_dialog(
-                "Name can't contain digits"
-            )
+            CustomDialog.error_dialog("Name can't contain digits")
             return False
         if re.search(r" ", player_name):
-            CustomDialog.error_dialog(
-                "Name can't have whitespace in it"
-            )
+            CustomDialog.error_dialog("Name can't have whitespace in it")
             return False
         if not re.search(r"[a-z]", player_name):
             CustomDialog.error_dialog(
@@ -151,7 +156,7 @@ class Page1(QWidget):
                 "Provide a name containing at least one upppercase letter"
             )
             return False
-        if re.fullmatch(r"(?=.*[a-z])(?=.*[A-Z])[a-zA-Z_]{6,12}", player_name):
+        if re.fullmatch(r"(?=.*[a-z])(?=.*[A-Z])[a-zA-Z_]{3,12}", player_name):
             return True
         else:
             CustomDialog.error_dialog("Generic error")

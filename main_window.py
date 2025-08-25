@@ -20,6 +20,7 @@ from PyQt5.QtCore import Qt, QSize
 from pages.page1 import Page1
 from pages.page2 import Page2
 from pages.page3 import Page3
+from pages.page4 import Page4
 from utility.player import Player
 
 from widgets.custom_dialog import CustomDialog
@@ -40,17 +41,19 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QIcon(self.resource_path("assets/icon.jpg")))
         self.setFixedSize(QSize(750, 750))
 
-        #creating pages for stacked widget
+        # creating pages for stacked widget
         self.page_1_widget = Page1(self)
         self.page_2_widget = Page2(self)
         self.page_3_widget = Page3(self)
+        self.page_4_widget = Page4(self)
 
         self.stacked_layout = QStackedLayout()
 
-        #adding widgets to the stacked layout
+        # adding widgets to the stacked layout
         self.stacked_layout.addWidget(self.page_1_widget)
         self.stacked_layout.addWidget(self.page_2_widget)
         self.stacked_layout.addWidget(self.page_3_widget)
+        self.stacked_layout.addWidget(self.page_4_widget)
 
         # set the initial page
         self.stacked_layout.setCurrentIndex(0)
@@ -110,9 +113,20 @@ class MainWindow(QMainWindow):
         switches widget to the third page widget in the stacked main window layout\n
         while at the same time updating specified values in some labels
         """
-        self.page_3_widget.update_values()
+        self.setFixedSize(QSize(400, 300))
+        self.page_3_widget.open_page()
         self.center_window()
         self.stacked_layout.setCurrentIndex(2)
+
+    def switch_to_page_4(self) -> None:
+        """
+        switches widget to the third page widget in the stacked main window layout\n
+        while at the same time updating specified values in some labels
+        """
+        self.setFixedSize(QSize(750, 750))
+        self.page_4_widget.update_values()
+        self.center_window()
+        self.stacked_layout.setCurrentIndex(3)
 
     def error_dialog(self, message: str) -> None:
         """
@@ -120,4 +134,3 @@ class MainWindow(QMainWindow):
         """
         dlg = CustomDialog(message=message)
         dlg.exec_()
-
