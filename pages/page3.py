@@ -1,23 +1,13 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import (
-    QMainWindow,
-    QPushButton,
-    QDesktopWidget,
-    QButtonGroup,
     QWidget,
     QVBoxLayout,
-    QHBoxLayout,
-    QStackedLayout,
-    QLineEdit,
     QLabel,
-    QApplication,
-    QMessageBox,
-    QDialog,
-    QDialogButtonBox,
 )
 
 from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtGui import QMovie
+from utility.service import resource_path
 
 
 class Page3(QWidget):
@@ -26,12 +16,10 @@ class Page3(QWidget):
         self.main_window = main_window
         self.v_layout = QVBoxLayout()
 
-        # self.main_window.overrideWindowFlags()
         self.label_animation = QLabel()
-        self.gif = QMovie(self.main_window.resource_path("assets/loading.gif"))
+        self.gif = QMovie(resource_path("assets/loading.gif"))
         self.gif.setScaledSize(QSize(400, 300))
         self.label_animation.setMovie(self.gif)
-        # self.gif.start()
 
         self.v_layout.addWidget(self.label_animation)
         self.setLayout(self.v_layout)

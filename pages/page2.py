@@ -1,37 +1,28 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import (
-    QMainWindow,
     QPushButton,
-    QDesktopWidget,
     QButtonGroup,
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
     QGridLayout,
-    QStackedLayout,
-    QLineEdit,
     QLabel,
-    QApplication,
-    QMessageBox,
-    QDialog,
-    QDialogButtonBox,
     QRadioButton,
 )
-from PyQt5.QtGui import QFont, QPixmap
+
 from PyQt5.QtCore import Qt, QSize
 
 from utility.player import Player
 from utility.game import Game
 from widgets.custom_dialog import CustomDialog
-
-# from main_window import MainWindow
+from utility.service import resource_path
 
 
 class Page2(QWidget):
     def __init__(self, main_window):
         super().__init__()
         self.main_window = main_window
-        self.resource_path = self.main_window.resource_path
+
         self.local_player_choice = None
 
         self.horizontal_layout = QHBoxLayout()
@@ -45,31 +36,30 @@ class Page2(QWidget):
         self.title.setObjectName("title")
         self.setStyleSheet(
             """
-                            QWidget{
-                            font-size: 25px;
-                            font-family: Garamond;
-                                        }
+                                QWidget{
+                                color: #e6b47b;
+                                font-size: 17px;
+                                font-family: Press Start 2P;
 
-                            QLabel#title{
-                            font-size: 50px;
-                            font-weight: bold;
-                            
-                                        }
-                            QLineEdit{
-                            font-size: 25px;
-                            border-radius: 10px;
-                                        }
-                            QPushButton{
-                            font-weight: bold;
-                            background-color: #f0a860;
-                            border-radius: 15px;
-                                        }
-                            QPushButton:hover{
-                            font-weight: bold;
-                            background-color: #faddc0;
-                            border-radius: 15px;
-                                        }
-                                            """
+                                            }
+                                QLabel#title{
+                                font-size: 28px;
+                                
+                                            }
+                                QLineEdit{
+                                color: #546345;
+                                font-size: 15px;
+                                border-radius: 15px;
+                                            }
+                                QPushButton{
+                                background-color: #893f36;
+                                border-radius: 15px;
+                                            }
+                                QPushButton:hover{
+                                background-color: #d0928a;
+                                border-radius: 15px;
+                                            }
+                                                """
         )
 
         self.setLayout(self.verical_layout)
@@ -83,7 +73,7 @@ class Page2(QWidget):
             f"{self.main_window.player.name}:{self.main_window.player.score}\ncpu:{self.main_window.cpu.score}"
         )
         button = QPushButton("I've made my choice")
-        button.setFixedSize(QSize(260, 60))
+        button.setFixedSize(QSize(350, 80))
         button.clicked.connect(self.make_option_choice)
 
         vertical_layout.setSpacing(50)
@@ -98,11 +88,11 @@ class Page2(QWidget):
         self.picture_rock = QLabel()
         self.picture_paper = QLabel()
         self.picture_scissors = QLabel()
-        rock_pic = self.resource_path("assets/picture_3.jpg")
+        rock_pic = resource_path("assets/picture_3.jpg")
         rock_pic = rock_pic.replace("\\", "/")
-        paper_pic = self.resource_path("assets/picture_2.jpg")
+        paper_pic = resource_path("assets/picture_2.jpg")
         paper_pic = paper_pic.replace("\\", "/")
-        scissors_pic = self.resource_path("assets/picture_4.jpg")
+        scissors_pic = resource_path("assets/picture_4.jpg")
         scissors_pic = scissors_pic.replace("\\", "/")
         self.picture_rock.setStyleSheet(
             f"""

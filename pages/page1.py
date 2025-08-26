@@ -9,11 +9,9 @@ from PyQt5.QtWidgets import (
     QLabel,
 )
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QFont, QPixmap
 
 from widgets.custom_dialog import CustomDialog
-
-# from main_window import MainWindow
+from utility.service import resource_path
 
 
 class Page1(QWidget):
@@ -21,7 +19,6 @@ class Page1(QWidget):
         super().__init__()
         # main_window is created to use it's methods
         self.main_window = main_window
-        self.resource_path = self.main_window.resource_path
 
         self.name_is_filled = False
 
@@ -39,26 +36,27 @@ class Page1(QWidget):
         self.setStyleSheet(
             """
                                 QWidget{
-                                font-size: 25px;
-                                font-family: Garamond;
+                                color: #e6b47b;
+                                font-size: 17px;
+                                font-family: Press Start 2P;
 
                                             }
                                 QLabel#title{
-                                font-size: 50px;
-                                font-weight: bold;
+                                font-size: 28px;
+                                
                                             }
                                 QLineEdit{
-                                font-size: 25px;
+                                color: #546345;
+                                font-size: 15px;
                                 border-radius: 15px;
                                             }
                                 QPushButton{
-                                font-weight: bold;
-                                background-color: #f0a860;
+                                background-color: #893f36;
                                 border-radius: 15px;
                                             }
                                 QPushButton:hover{
-                                font-weight: bold;
-                                background-color: #faddc0;
+                                font-size: 18px;
+                                background-color: #d0928a;
                                 border-radius: 15px;
                                             }
                                                 """
@@ -70,10 +68,10 @@ class Page1(QWidget):
         self.start_button = QPushButton("Start the game")
         self.quit_button = QPushButton("Exit")
 
-        self.start_button.setFixedSize(200, 60)
+        self.start_button.setFixedSize(300, 80)
         self.start_button.clicked.connect(self.start_game)
 
-        self.quit_button.setFixedSize(200, 60)
+        self.quit_button.setFixedSize(300, 80)
         self.quit_button.clicked.connect(self.main_window.close)
 
         horizontal_layout.addWidget(self.start_button)
@@ -83,10 +81,8 @@ class Page1(QWidget):
         self.title = QLabel("Rock paper scissors")
 
         self.picture = QLabel()
-        pic = self.resource_path("assets/picture_1.jpg")
+        pic = resource_path("assets/picture_1.jpg")
         pic = pic.replace("\\", "/")
-        # self.picture.setPixmap(pic)
-        # self.picture.setScaledContents(True)
         self.picture.setStyleSheet(
             f"""
             color: grey;
@@ -94,24 +90,25 @@ class Page1(QWidget):
             border-radius: 35px;
             """
         )
-        self.picture.setFixedSize(QSize(400, 400))
+        self.picture.setFixedSize(QSize(350, 350))
 
         self.submit_button = QPushButton("Submit your name")
         self.submit_button.clicked.connect(self.submit_name)
-        self.submit_button.setFixedSize(QSize(260, 60))
+        self.submit_button.setFixedSize(QSize(350, 80))
 
         self.current_player_name = QLabel("Current player is:")
 
         self.name_box = QLineEdit()
-        self.name_box.setFixedSize(QSize(300, 60))
+        self.name_box.setFixedSize(QSize(350, 80))
         self.name_box.setPlaceholderText("Input your name here")
 
+        vertical_layout.setSpacing(25)
+        vertical_layout.addSpacing(15)
         vertical_layout.addWidget(self.title, alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(self.picture, alignment=Qt.AlignHCenter)
-        vertical_layout.addSpacing(45)
+        vertical_layout.addWidget(self.current_player_name, alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(self.name_box, alignment=Qt.AlignHCenter)
         vertical_layout.addWidget(self.submit_button, alignment=Qt.AlignHCenter)
-        vertical_layout.addWidget(self.current_player_name, alignment=Qt.AlignHCenter)
 
     def submit_name(self) -> None:
         """

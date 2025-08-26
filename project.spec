@@ -10,7 +10,9 @@ a = Analysis(
         ('assets/picture_2.jpg', 'assets'),
         ('assets/picture_3.jpg', 'assets'),
         ('assets/picture_4.jpg', 'assets'),
-        ('assets/loading.gif', 'assets')
+        ('assets/loading.gif', 'assets'),
+        ('assets/boobs.jpg', 'assets'),
+        ('assets/PressStart2P-Regular.ttf', 'assets'),
         ],
     hiddenimports=[],
     hookspath=[],

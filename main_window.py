@@ -1,21 +1,11 @@
 from PyQt5.QtWidgets import (
     QMainWindow,
-    QPushButton,
-    QDesktopWidget,
-    QButtonGroup,
     QWidget,
-    QVBoxLayout,
-    QHBoxLayout,
     QStackedLayout,
-    QLineEdit,
-    QLabel,
-    QApplication,
     QMessageBox,
-    QDialog,
-    QDialogButtonBox,
 )
-from PyQt5.QtGui import QIcon, QFont, QPixmap, QGuiApplication
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QIcon, QFontDatabase
+from PyQt5.QtCore import QSize
 
 from pages.page1 import Page1
 from pages.page2 import Page2
@@ -24,22 +14,29 @@ from pages.page4 import Page4
 from utility.player import Player
 
 from widgets.custom_dialog import CustomDialog
+from utility.service import resource_path
 
 
 class MainWindow(QMainWindow):
 
-    def __init__(self, resource_path):
+    def __init__(self):
         super().__init__()
 
         # shared data
         self.player = Player()
         self.cpu = Player()
         self.game_result = None
-        self.resource_path = resource_path
+
+        custom_font = resource_path("assets/PressStart2P-Regular.ttf")
+        custom_font = custom_font.replace("\\", "/")
+        id = QFontDatabase.addApplicationFont(custom_font)
+
+        famlies = QFontDatabase.applicationFontFamilies(id)
+        # print(famlies[0])
 
         self.setWindowTitle("Rock Paper Scissors")
-        self.setWindowIcon(QIcon(self.resource_path("assets/icon.jpg")))
-        self.setFixedSize(QSize(750, 750))
+        self.setWindowIcon(QIcon(resource_path("assets/icon.jpg")))
+        self.setFixedSize(QSize(850, 850))
 
         # creating pages for stacked widget
         self.page_1_widget = Page1(self)
@@ -61,7 +58,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet(
             """
                         QMainWindow{
-                        background-color: #7591d2;
+                        background-color: #1f1514;
                            }
                         """
         )
