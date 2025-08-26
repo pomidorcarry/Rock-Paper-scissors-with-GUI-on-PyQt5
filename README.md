@@ -2,7 +2,7 @@
 ## TO DO 
  - Tests
  - Rearrange project architecture
-
+ - add interest api for random pictures
 #### Description:
 
 

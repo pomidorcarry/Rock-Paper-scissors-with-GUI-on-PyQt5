@@ -46,6 +46,7 @@ class Page1(QWidget):
                                 
                                             }
                                 QLineEdit{
+                                padding: 15px;
                                 color: #546345;
                                 font-size: 15px;
                                 border-radius: 15px;
